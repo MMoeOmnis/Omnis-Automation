@@ -1,0 +1,11 @@
+If sys(6)='N'     ;; windows only
+	If $root.$components.$findname('Automation Library')
+		Open window instance wAutomation//CEN
+	Else
+		OK message Error (Icon) {Unable to locate the automation component.}
+		Close library {[$clib().$name]}
+	End If
+Else
+	OK message Error (Icon) {Automation only available on Windows Platforms.}
+	Close library {[$clib().$name]}
+End If

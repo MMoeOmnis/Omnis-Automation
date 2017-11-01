@@ -1,0 +1,10 @@
+If iAutomationType=2
+	Set reference iObjectRef to $clib.$codes.AutomationCode.$methods.Excel
+	Do iObjectRef.$modify
+Else If iAutomationType=3
+	Set reference iObjectRef to $clib.$codes.AutomationCode.$methods.PowerPoint
+	Do iObjectRef.$modify
+Else If iAutomationType=4
+	Set reference iObjectRef to $clib.$codes.AutomationCode.$methods.Word
+	Do iObjectRef.$modify
+End If

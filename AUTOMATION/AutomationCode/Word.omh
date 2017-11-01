@@ -1,0 +1,94 @@
+Do method GetAutomationObject ("Word.App") Returns lWordObj     ;; Get the automation object for the specified application
+If isnull(lWordObj)     ;; st/pf/654
+	OK message Error (Icon) {Unable to locate MS Word}
+	Quit method
+End If
+
+;  find the location of the template document
+Calculate lOMNISPath as sys(10)
+Do FileOps.$splitpathname(lOMNISPath,lDriveName,lPathName,lFileName,lFileExtension)
+Calculate lOMNISPath as con(lDriveName,lPathName,'BaseLetter.doc')
+
+Do lWordObj.$createobject()     ;; start word
+Do lWordObj.$visible.$assign(kTrue)     ;; make word visible
+Do lWordObj.$documents Returns lWordDocObjCollection     ;; obtain document object
+Do lWordObj.$activate()     ;; give word the focus
+
+Do lWordDocObjCollection.$open(lOMNISPath,kFalse,kFalse,kTrue) Returns lWordDocObj     ;; open template file
+
+Do lWordDocObj.$range() Returns lRangeObject     ;; container field for letter body
+Do lWordDocObj.$words() Returns lSelectionObj     ;; get all the words in the document
+
+Do lSelectionObj.$xfirst() Returns lSelectionObj     ;; get first word
+Do lSelectionObj.$xnext(2,6) Returns lSelectionObj     ;; skip 6 words
+Do lSelectionObj.$insertafter(pName)
+Do lSelectionObj.$insertparagraphbefore     ;; blank line
+
+;  set font styles for the body of the letter
+Do lRangeObject.$font().$size.$assign(12)
+Do lRangeObject.$font().$italic.$assign(kTrue)
+Do lRangeObject.$font().$::name.$assign('Arial')     ;; use :: so omnis knows it's not it's $name property
+
+;  justify letter
+Do lRangeObject.$paragraphs Returns lParagraphObject     ;; paragraph objects allow you to set justification styles
+Do lParagraphObject.$alignment.$assign(3)     ;; justify left & right
+
+;  right justify the date field
+Do lWordDocObj.$words().$xfirst() Returns lSelectionObj     ;; get first word, which in this case will be a paragraph insert
+Do lSelectionObj.$xnext(4,1) Returns lSelectionObj     ;; return next sentence
+Do lSelectionObj.$paragraphs Returns lParagraphObject
+Do lParagraphObject.$alignment.$assign(2)     ;; right justify
+
+;  insert the address information
+Do lWordDocObj.$range(0,1) Returns lRangeObject     ;; insert new range ready for the address data
+Do lRangeObject.$insertbefore(pAddress)     ;; or $insertafter
+Do lRangeObject.$insertparagraphafter     ;; blank line
+
+;  justify header
+Do lRangeObject.$paragraphs Returns lParagraphObject
+Do lParagraphObject.$alignment.$assign(2)     ;; right justify
+
+;  font styles for the header
+Do lRangeObject.$font().$size.$assign(12)
+Do lRangeObject.$font().$italic.$assign(kFalse)
+
+;  insert the sender information
+Do lWordDocObj.$words().$xlast() Returns lSelectionObj     ;; get the final word in the document
+Do lSelectionObj.$previous(2,4) Returns lSelectionObj     ;; 2 is the constant equiv for a word, 4 words back (includes the paragraph markings)
+
+Do lSelectionObj.$insertbefore(pSender)
+Do lSelectionObj.$insertafter(pPosition)
+Do lSelectionObj.$insertparagraphafter     ;; blank line
+Do lSelectionObj.$font().$italic.$assign(kFalse)     ;; make the name field non-italic
+
+Do method CountAddressLines (pAddress) Returns lNum     ;; find out how many lines are in the address
+
+;  insert the subject line and format it
+Do lWordDocObj.$paragraphs Returns lParagraphObjCollection     ;; all the paragraphs in the document
+Do lParagraphObjCollection.$item(lNum+6).$range().$insertbefore(pSubject)     ;; insert a line using the range object returned from the paragraph
+Do lParagraphObjCollection.$item(lNum+6).$range().$insertparagraphbefore     ;; add a blank line
+Do lParagraphObjCollection.$item(lNum+7).$range() Returns lRangeObject     ;; increment the paragraph number to use since we have created a new paragraph
+Do lRangeObject.$font().$bold.$assign(kTrue)
+Do lRangeObject.$font().$italic.$assign(kFalse)
+Do lRangeObject.$font().$underline.$assign(kTrue)
+Do lParagraphObjCollection.$item(lNum+7) Returns lParagraphObject
+Do lParagraphObject.$alignment.$assign(1)     ;; centre align the paragraph
+
+Calculate lOMNISVersion as sys(1)     ;; get omnis version
+
+Do lSelectionObj.$find() Returns lFindObj     ;; a selection object will change the text when used with a find object
+Do lFindObj.$execute('x.x',kTrue,kTrue,kFalse,kFalse,kFalse,kTrue,kTrue,kFalse,lOMNISVersion,2)     ;; find and replace version number, 2 means find and replace all occurrences
+
+;  reset the formatting on 'Dear' to non-italic, so it contrasts with the following name
+Do lFindObj.$text.$assign('Dear')
+Do lFindObj.$execute()
+Do lSelectionObj.$font().$italic.$assign(kFalse)
+
+If pPrintLetter
+	Do lWordDocObj.$printout()     ;; print it
+End If
+
+;  ensures that Word does not get closed before user has had chance to view it
+OK message OMNIS (Icon) {Finished MS WORD Automation example//Press OK to Close Word}
+
+Do lWordObj.$quit(0)     ;; close word and do not save document

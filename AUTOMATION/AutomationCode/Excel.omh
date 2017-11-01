@@ -1,0 +1,86 @@
+Do method GetAutomationObject ("Excel.App") Returns lExcelObj     ;; Get the automation object for the specified application
+If isnull(lExcelObj)     ;; st/pf/654
+	OK message Error (Icon) {Unable to locate MS Excel}
+	Quit method
+End If
+
+;  microsoft excel automation example
+
+Do lExcelObj.$createobject()     ;; start excel
+Do lExcelObj.$visible.$assign(kTrue)     ;; make excel visible
+Do lExcelObj.$workbooks Returns lExcelWorkBooksObj     ;; get workbooks object
+
+Do lExcelWorkBooksObj.$xadd() Returns lWorkBookObj     ;; add workbook
+Do lWorkBookObj.$activesheet Returns lWorkSheetObj     ;; get current worksheet object
+
+;  add a title to the current worksheet and set the font size,color and style of the text
+Do lWorkSheetObj.$range("b2:b2").$value2.$assign('Yearly Sales Figures')
+Do lWorkSheetObj.$range("b2:b2").$font().$size(12)
+Do lWorkSheetObj.$range("b2:b2").$font().$color.$assign(rgb(255,0,0))
+Do lWorkSheetObj.$range("b2:b2").$font().$bold.$assign(kTrue)
+Do lWorkSheetObj.$range("b2:b2").$font().$italic.$assign(kTrue)
+
+;  draw a grid and set its background color, then setup font styles for particular cells where data is to be placed
+Do lWorkSheetObj.$range("b4:g10").$borders().$linestyle.$assign(1) Returns #F
+Do lWorkSheetObj.$range("b4:g10").$interior().$color.$assign(rgb(0,0,255))
+Do lWorkSheetObj.$range("c5:g10").$interior().$color.$assign(rgb(0,204,255))
+Do lWorkSheetObj.$range("b4:g4").$font().$bold.$assign(kTrue)
+Do lWorkSheetObj.$range("b4:g4").$font().$color.$assign(rgb(255,255,255))
+Do lWorkSheetObj.$range("b5:b10").$font().$color.$assign(rgb(255,255,255))
+
+;  populate grid
+For lCount from 0 to 5 step 1
+	Calculate lCol as chr(66+lCount)
+	Calculate lCell as con(lCol,4)
+	
+	If lCount=0
+		Do lWorkSheetObj.$range(lCell).$value2.$assign('Quarter')
+	Else
+		Do lWorkSheetObj.$range(lCell).$value2.$assign(dpart(kYear,#D)-5+lCount) Returns #F     ;; add column heading to grid
+		Calculate lSum as con('=sum(',lCol,'5:',lCol,'6:',lCol,'7:',lCol,'8)')
+		Do lWorkSheetObj.$range(con(lCol,10)).$formula(lSum) Returns #F     ;; add formula to automatically caculate totals
+	End If
+	
+	For lRow from 1 to 4 step 1
+		Calculate lCell as con(lCol,lRow+4)
+		If lCount=0
+			Do lWorkSheetObj.$range(lCell).$value2.$assign(con('Q',lRow)) Returns #F     ;; add vertical heading
+		Else
+			Do lWorkSheetObj.$range(lCell).$value2.$assign(pSalesList(lCount+1,lRow)) Returns #F     ;; add data
+		End If
+	End For
+	
+	If lCount=0
+		Do lWorkSheetObj.$range("b10").$value2.$assign("Totals")
+	End If
+End For
+
+
+;  create a new chart in the current workbook
+Do lWorkBookObj.$charts().$xadd() Returns lChartObj
+Do lChartObj.$setsourcedata(lWorkSheetObj.$range("c5:g8")) Returns #F     ;; set the source data as a range of cells
+Do lChartObj.$charttype.$assign(-4100) Returns #F     ;; assign chart type as 3-D Column
+Do lChartObj.$plotby.$assign(1) Returns #F     ;; plot by rows
+Do lChartObj.$hastitle.$assign(kTrue) Returns #F
+Do lChartObj.$charttitle().$text.$assign('Yearly Sales Figures')
+
+;  Catagory Axis
+Do lChartObj.$axes(1).$categorynames.$assign(lWorkSheetObj.$range("c4:g4")) Returns #F
+Do lChartObj.$axes(1).$hastitle.$assign(1)
+Do lChartObj.$axes(1).$axistitle().$caption.$assign('Year')
+
+;  value axis
+Do lChartObj.$axes(2).$hastitle.$assign(1)
+Do lChartObj.$axes(2).$axistitle().$caption.$assign('Sales')
+
+;  series axis
+Do lChartObj.$seriescollection(1).$::name.$assign('Q1')
+Do lChartObj.$seriescollection(2).$::name.$assign('Q2')
+Do lChartObj.$seriescollection(3).$::name.$assign('Q3')
+Do lChartObj.$seriescollection(4).$::name.$assign('Q4')
+Do lChartObj.$axes(3).$hastitle.$assign(1)
+Do lChartObj.$axes(3).$axistitle().$caption.$assign('Quarter')
+
+OK message OMNIS (Icon) {Finished MS Excel Automation example//Press OK to Close Excel}
+Do lWorkBookObj.$::close(kFalse) Returns #F     ;; close the current excel work book without saving
+Do lExcelObj.$quit     ;; close excel

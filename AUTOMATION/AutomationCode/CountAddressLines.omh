@@ -1,0 +1,20 @@
+;  find how many address lines have been entered
+Calculate lString as pAddress
+Calculate lPos as pos(chr(13),lString)     ;; chr(13) c/r is line delimiter
+
+If lPos
+	Calculate lNum as lNum+1
+	Calculate #F as 1
+	While flag true
+		Calculate lString as mid(lString,lPos+1,len(lString))     ;; cut off the first part of the string up to the carriage return
+		Calculate lPos as pos(chr(13),lString)
+		Calculate lNum as lNum+1
+		If not(lPos)
+			Calculate #F as 0
+		End If
+	End While
+Else
+	Calculate lNum as 1
+End If
+
+Quit method lNum     ;; return number of lines

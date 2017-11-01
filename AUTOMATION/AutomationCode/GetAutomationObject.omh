@@ -1,0 +1,8 @@
+Do lExternalsList.$cols.$add('ExternalName',kCharacter,kSimplechar,100)     ;; Create a list with a column for names of automation objects
+Do lExternalsList.$cols.$add('ExternalVersion',kInteger,k32bitint)     ;; Create a list with a column for versions of automation objects //st/gs/154
+;  Do $root.$extobjects.Automation Library.$objects.$sendall(lExternalsList.$add($ref.$name),upp(mid($ref.$name,1,len(pString)))=upp(pString))     ;; Build a list of all Automation objects who
+Do $root.$extobjects.Automation Library.$objects.$sendall(lExternalsList.$add($ref.$name,mid($ref.$name,rpos(".",$ref.$name)+1,100)),upp(mid($ref.$name,1,len(pString)))=upp(pString))     ;; st/gs/154 replaces above commented out line
+;  Do lExternalsList.$sort($ref.ExternalName,kTrue)     ;; Put the most current version of the Object at the top of the list.
+Do lExternalsList.$sort($ref.ExternalVersion,kTrue,$ref.ExternalName,kTrue)     ;; st/gs/154 replaces the above commented out line
+Do lTempRow.$cols.$add('Object',kObject,con(".Automation Library.Automation\",lExternalsList.1.ExternalName))     ;; Create an instance of the automation object inside a row variable
+Quit method lTempRow.Object     ;; Return the object to the calling method.

@@ -1,0 +1,64 @@
+Do method GetAutomationObject ("PowerPoint.App") Returns objPowerPoint     ;; Get the automation object for the specified application
+If isnull(objPowerPoint)     ;; st/pf/654
+	OK message Error (Icon) {Unable to locate MS Powerpoint}
+	Quit method
+End If
+
+Do objPowerPoint.$createobject()     ;; Start powerpoint object
+Do objPowerPoint.$visible.$assign(kTrue)     ;; Make powerpoint visible
+Do objPowerPoint.$presentations Returns objPresentations     ;; Obtain presentations object
+Do objPresentations.$xadd() Returns objPresentation     ;; Add new presentation
+For iPageNum from 1 to 5 step 1
+	Do objPresentation.$slides Returns objSlide     ;; Obtain Slide Object
+	Do objSlide.$xadd(iPageNum,1) Returns objCurSlide     ;; Add new slide
+	Do objPresentation.$slidemaster().$background().$fill().$presettextured(23)     ;; Set background texture
+	Do objCurSlide.$slideshowtransition().$entryeffect(1793)     ;; Set transition state
+	Calculate nTSize1 as 0
+	Calculate nTSize2 as 0
+	Calculate bShadow as kTrue
+	Switch iPageNum
+		Case 1
+			Calculate nTSize1 as 50
+			Calculate nRGB as rgb(255,255,255)
+			Calculate sText as pSlide1
+		Case 2
+			Calculate nTSize1 as 90
+			Calculate nTSize2 as 48
+			Calculate nRGB as rgb(255,0,0)
+			Calculate sText as pSlide2
+		Case 3
+			Calculate nTSize1 as 50
+			Calculate nTSize2 as 42
+			Calculate nRGB as rgb(255,0,0)
+			Calculate sText as pSlide3
+		Case 4
+			Calculate nTSize1 as 100
+			Calculate nTSize2 as 34
+			Calculate nRGB as rgb(0,0,255)
+			Calculate sText as pSlide4
+		Case 5
+			Calculate nTSize1 as 60
+			Calculate nTSize2 as 72
+			Calculate nRGB as rgb(0,255,0)
+			Calculate sText as pSlide5
+	End Switch
+	;  Setup text object 1
+	Do objCurSlide.$Shapes().$range(1).$textframe().$textrange() Returns objTextRange1     ;; Obtain text object for shape 1
+	Do objTextRange1.$::text(con("Hi! Page ",iPageNum))     ;; Set text
+	If nTSize1
+		Do objTextRange1.$characters().$font().$size.$assign(nTSize1)     ;; Set font size
+	End If
+	;  Setup text object 2
+	Do objCurSlide.$shapes().$range(2).$textframe().$textrange() Returns objTextRange2     ;; Obtain text object for shape 2
+	Do objTextRange2.$::text(sText)     ;; Set text
+	Do objTextRange2.$characters().$font Returns objFont     ;; Obtain font object
+	Do objFont.$shadow.$assign(bShadow)     ;; Set shadow
+	Do objFont.$color().$rgb.$assign(nRGB)     ;; Set color
+	If nTSize2
+		Do objFont.$size.$assign(nTSize2)     ;; Set font size
+	End If
+End For
+Do objPresentation.$slideshowsettings().$run()     ;; Run the show!!!
+OK message OMNIS (Icon) {Finished MS Powerpoint Automation example//Press OK to Close Powerpoint}
+Do objPresentation.$::close()     ;; Close presentation
+Do objPowerPoint.$quit()     ;; Shutdown & quit powerpoint

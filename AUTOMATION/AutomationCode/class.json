@@ -1,0 +1,22 @@
+{
+	"classtype": "kCode",
+	"internalversion": 3,
+	"designtaskname": "Startup_Task",
+	"cvardefs": [
+
+	],
+	"properties": {
+		"collectperformancedata": false,
+		"componenticon": 0,
+		"componenttype": "kCompStoreHidden",
+		"createdate": "2016-07-18 13:24:22",
+		"desc": "",
+		"editor": "",
+		"editordata": "",
+		"external": false,
+		"moddate": "2010-05-24 16:37:03",
+		"showascheckedout": false,
+		"userinfo": "",
+		"version": "1"
+	}
+}
