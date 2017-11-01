@@ -1,0 +1,2 @@
+On evClick     ;; Event Parameters - pRow( Itemreference )
+	Do code method AutomationCode/PowerPoint (iSlide1,iSlide2,iSlide3,iSlide4,iSlide5)

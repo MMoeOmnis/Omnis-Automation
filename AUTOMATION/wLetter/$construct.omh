@@ -1,0 +1,14 @@
+;  Enter your initialization code here
+Begin text block
+Text: {Hill Tree Farm} (Carriage return)
+Text: {Hagglethwaite Road} (Carriage return)
+Text: {Barnstaple} (Carriage return)
+Text: {Devon} (Carriage return)
+Text: {BD1 5HJ}
+End text block
+Get text block iAddress
+
+Calculate iRecipient as 'Simon Templar'
+Calculate iSubject as 'Product Launch'
+Calculate iSender as 'Thomas J. Keppler'
+Calculate iPosition as 'Marketing Manager'

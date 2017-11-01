@@ -1,0 +1,6 @@
+;  Enter your initialization code here
+Calculate iSlide1 as "This is an example of automation from Omnis Studio to Powerpoint."
+Calculate iSlide2 as "The programs interact seamlessly..."
+Calculate iSlide3 as "Demonstrating the power..."
+Calculate iSlide4 as "Of interoperable applications..."
+Calculate iSlide5 as "Created on the Fly!!!"

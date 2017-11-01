@@ -1,0 +1,6 @@
+On evClick     ;; Event Parameters - pRow( Itemreference )
+	If not(pos('Re: ',iSubject))
+		Calculate iSubject as con('Re: ',iSubject)
+	End If
+	
+	Do code method AutomationCode/Word (iRecipient,iAddress,iSubject,iSender,iPosition,iPrint)
