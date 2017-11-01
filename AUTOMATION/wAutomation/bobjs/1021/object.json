@@ -1,0 +1,30 @@
+{
+	"ident": 1021,
+	"order": 16385,
+	"objtype": "kText",
+	"properties": {
+		"align": "kLeftJst",
+		"backcolor": "kColor3DFace",
+		"backpattern": 15,
+		"designactive": true,
+		"edgefloat": "kEFnone",
+		"fieldstyle": "CtrlLabel",
+		"font": 5,
+		"fontsize": 0,
+		"fontstyle": "kPlain",
+		"forecolor": "kColorForeFill",
+		"height": 309,
+		"left": 9,
+		"objlink": 65537,
+		"text": {
+			"type": 14,
+			"calc": "\u001B\u000180000008#Omnis Studio allows you to control a number of other applications using the Automation interface.  This gives your applications even greater power and flexibility.  These examples show how to interface Omnis Studio with the main Microsoft Office products and can be used as templates to get you started with your own Automation enabled applications.\r\rThe Excel example shows how Omnis can create an Excel workbook\u001B\u000200000000#, insert data and formulae into a worksheet and produce a chart.\r\rThe Powerpoint example creates a sample slideshow with data from Omnis and then runs it.\u001B\u000100000001#\r\u001B\u000180000008#\rThe Word example explores updating a template letter with address, contact, subject and sender data sent from Omnis.  It also shows how Find and Replace can be used to alter sections of the letter.\r\rAll of these examples could be easily extended to take advantage of data stored within an Omnis or 3rd party database."
+		},
+		"textcolor": "kColorWindowText",
+		"top": 16,
+		"userinfo": "",
+		"vertcentertext": false,
+		"visible": true,
+		"width": 418
+	}
+}

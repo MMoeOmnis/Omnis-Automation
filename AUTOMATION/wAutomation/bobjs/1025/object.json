@@ -1,0 +1,30 @@
+{
+	"ident": 1025,
+	"order": 16387,
+	"objtype": "kText",
+	"properties": {
+		"align": "kLeftJst",
+		"backcolor": "kColor3DFace",
+		"backpattern": 15,
+		"designactive": true,
+		"edgefloat": "kEFnone",
+		"fieldstyle": "CtrlLabel",
+		"font": 5,
+		"fontsize": 0,
+		"fontstyle": "kPlain",
+		"forecolor": "kColorForeFill",
+		"height": 313,
+		"left": 9,
+		"objlink": 131073,
+		"text": {
+			"type": 14,
+			"calc": "\u001B\u000180000008#This automation example creates an Excel Workbook and then inserts \u001B\u000200000000#yearly sales figures into cells within the current Worksheet of the Workbook. Once all the values have been inserted,\ra chart is produced based on data in the Worksheet cells.\r\rThe example requires that you have MS Excel 97 or above installed."
+		},
+		"textcolor": "kColorWindowText",
+		"top": 17,
+		"userinfo": "",
+		"vertcentertext": false,
+		"visible": true,
+		"width": 137
+	}
+}

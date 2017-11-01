@@ -1,0 +1,30 @@
+{
+	"ident": 1026,
+	"order": 16388,
+	"objtype": "kText",
+	"properties": {
+		"align": "kLeftJst",
+		"backcolor": "kColor3DFace",
+		"backpattern": 15,
+		"designactive": true,
+		"edgefloat": "kEFnone",
+		"fieldstyle": "CtrlLabel",
+		"font": 5,
+		"fontsize": 0,
+		"fontstyle": "kPlain",
+		"forecolor": "kColorForeFill",
+		"height": 405,
+		"left": 9,
+		"objlink": 196609,
+		"text": {
+			"type": 14,
+			"calc": "The Powerpoint example creates a 5 slide presentation based on the data to the right.  After creating the base   powerpoint object, a presentations collection object is obtained. \r\rThis will hold the individual presentation slides. The slides are then formatted individually, before the example concludes by running the presentation.  Press the Enter key or the mouse button to move between slides while the presentation is running.\r\rThe example requires that you have MS Powerpoint 97 or above installed."
+		},
+		"textcolor": "kColorWindowText",
+		"top": 17,
+		"userinfo": "",
+		"vertcentertext": false,
+		"visible": true,
+		"width": 137
+	}
+}

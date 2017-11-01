@@ -1,0 +1,30 @@
+{
+	"ident": 1028,
+	"order": 16390,
+	"objtype": "kText",
+	"properties": {
+		"align": "kCenterJst",
+		"backcolor": "kColor3DFace",
+		"backpattern": 1,
+		"designactive": true,
+		"edgefloat": "kEFnone",
+		"fieldstyle": "",
+		"font": 4,
+		"fontsize": 8,
+		"fontstyle": "kBold",
+		"forecolor": "kColorForeFill",
+		"height": 13,
+		"left": 0,
+		"objlink": 67239937,
+		"text": {
+			"type": 14,
+			"calc": "[iYear4Lbl]"
+		},
+		"textcolor": "kColorWindowText",
+		"top": 0,
+		"userinfo": "",
+		"vertcentertext": false,
+		"visible": true,
+		"width": 40
+	}
+}

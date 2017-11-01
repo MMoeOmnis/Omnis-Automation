@@ -1,0 +1,30 @@
+{
+	"ident": 1022,
+	"order": 16386,
+	"objtype": "kText",
+	"properties": {
+		"align": "kLeftJst",
+		"backcolor": "kColor3DFace",
+		"backpattern": 15,
+		"designactive": true,
+		"edgefloat": "kEFnone",
+		"fieldstyle": "CtrlLabel",
+		"font": 5,
+		"fontsize": 0,
+		"fontstyle": "kPlain",
+		"forecolor": "kColorForeFill",
+		"height": 394,
+		"left": 9,
+		"objlink": 262145,
+		"text": {
+			"type": 14,
+			"calc": "\u001B\u000180000008#This example uses a template letter which has previously been created, then customises it with the data shown to the right and inserts appropriate letter formatting.\r\rTo do this it creates a Word object which then controls the process by creating further objects of type Range, Paragraph, Find and Selection.  The document is then manipulated via the properties and methods of these objects.\r\rThe example requires that you have MS Word 97 or above installed on your system."
+		},
+		"textcolor": "kColorWindowText",
+		"top": 17,
+		"userinfo": "",
+		"vertcentertext": false,
+		"visible": true,
+		"width": 137
+	}
+}

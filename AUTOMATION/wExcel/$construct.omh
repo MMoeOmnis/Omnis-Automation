@@ -1,0 +1,12 @@
+;  Enter your initialization code here
+
+Do iSalesList.$define(iQuarter,iYear1,iYear2,iYear3,iYear4,iYear5)
+For lQtrCount from 1 to 4 step 1
+	Do iSalesList.$add(con('Q',lQtrCount),lQtrCount*100,lQtrCount*200,lQtrCount*300,lQtrCount*400,lQtrCount*500)
+End For
+
+Calculate iYear5Lbl as dpart(kYear,#D)
+Calculate iYear4Lbl as iYear5Lbl-1
+Calculate iYear3Lbl as iYear4Lbl-1
+Calculate iYear2Lbl as iYear3Lbl-1
+Calculate iYear1Lbl as iYear2Lbl-1
