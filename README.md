@@ -1,5 +1,7 @@
 # Omnis-Automation
 Omnis library shows how you can use Automation in Omnis Studio to interact with Word, Excel and Powerpoint (Windows only).
+For more info:
+http://www.omnis.net/documentation/extendingomnis/index.jsp?detail=10automation.html#chapter-10automation
 
 For Omnis Studio 8.1.2 and above.
 
